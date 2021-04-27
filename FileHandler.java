@@ -4,11 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -18,14 +16,15 @@ public class FileHandler {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void readObjectfromFile(String filename) {
+	public UserProfile readObjectfromFile(String filename) {
 		UserProfile userObject = new UserProfile();
 		try {
-			FileInputStream fileIn = new FileInputStream(filename);
+			FileInputStream fileIn = new FileInputStream("C:/Users/newco/Documents/temporary/"+filename);
 			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 			userObject = (UserProfile) objectIn.readObject();
 			System.out.println("The Object read from file is: " + userObject.toString());
 			objectIn.close();
+			fileIn.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,6 +35,7 @@ public class FileHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return userObject;
 	}
 
 	public void updateObjectIntoFile(String filename, UserProfile userProfile) {
@@ -54,6 +54,7 @@ public class FileHandler {
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 			objectOutputStream.writeObject(userProfile);
 			objectOutputStream.close();
+			fileOutputStream.close();
 			System.out.println("File written...");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -70,6 +71,7 @@ public class FileHandler {
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 			UserProfile userProfile = (UserProfile) objectInputStream.readObject();
 			objectInputStream.close();
+			fileInputStream.close();
 			return userProfile;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
